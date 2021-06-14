@@ -35,6 +35,8 @@ function makeTodoMarkup(todo) {
 function addTodo(todoMarkup) {
     listEl.insertAdjacentHTML('beforeend', todoMarkup);
     listEl.querySelectorAll('.todo-box__flag').forEach(el => el.style.backgroundColor = el.dataset.color);
+
+    setTimeout(() => listEl.lastElementChild.classList.add('open'), 0);
 }
 
 function onListClick (event) {
@@ -45,7 +47,8 @@ function onListClick (event) {
     }
     
     if(event.target.dataset.action === 'remove') {
-        listEl.removeChild(itemEl);
+        itemEl.classList.remove('open');
+        setTimeout(() => listEl.removeChild(itemEl), 250);
     }
 
     if(event.target.dataset.action === 'edit') {
@@ -71,6 +74,7 @@ function onListClick (event) {
     }
 
     if(event.target.dataset.color) {
-        itemEl.style.backgroundColor = event.target.dataset.color;
+        //console.log(getComputedStyle(document.querySelector('.todo-box__inputs'), ':before').backgroundColor);
+        itemEl.querySelector('.todo-box__inputs').style.backgroundColor = event.target.dataset.color;
     }
 }
